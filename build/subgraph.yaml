@@ -1,0 +1,44 @@
+specVersion: 0.0.4
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: NFTCollectionFactory
+    network: fuji
+    source:
+      address: "0xb2E83358c2230cf44601BBCACFc97aA3abC7bC86"
+      abi: NFTCollectionFactory
+      startBlock: 10355461
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - NFTCollectionEntity
+      abis:
+        - name: NFTCollectionFactory
+          file: NFTCollectionFactory/abis/NFTCollectionFactory.json
+      eventHandlers:
+        - event: NFTCollectionCreated(indexed address,indexed
+            address,string,string,bytes32,uint256,uint256[5],address[3])
+          handler: handleNFTCollectionCreated
+      file: NFTCollectionFactory/NFTCollectionFactory.wasm
+templates:
+  - kind: ethereum
+    name: ERC721NFTCollection
+    network: fuji
+    source:
+      abi: ERC721NFTCollection
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - NFTCollectionEntity
+      abis:
+        - name: ERC721NFTCollection
+          file: ERC721NFTCollection/abis/ERC721NFTCollection.json
+      eventHandlers:
+        - event: PrivateModeIsOn()
+          handler: handlePrivateModeIsOn
+      file: templates/ERC721NFTCollection/ERC721NFTCollection.wasm

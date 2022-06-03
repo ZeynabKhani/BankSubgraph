@@ -1,14 +1,14 @@
 import { BigInt, log } from "@graphprotocol/graph-ts";
-import { NFTBankCreated } from "../generated/NFTBankFactory/NFTBankFactory";
-import { NFTBankEntity } from "../generated/schema";
+import { NFTCollectionCreated } from "../generated/NFTCollectionFactory/NFTCollectionFactory";
+import { NFTCollectionEntity } from "../generated/schema";
 
-export function handleNFTBankCreated(event: NFTBankCreated): void {
-	let entity = NFTBankEntity.load(event.params.nftBankProxyAddress.toHexString());
+export function handleNFTCollectionCreated(event: NFTCollectionCreated): void {
+	let entity = NFTCollectionEntity.load(event.params.nftCollection.toHexString());
 
 	if (!entity) {
-		entity = new NFTBankEntity(event.params.nftBankProxyAddress.toHexString());
+		entity = new NFTCollectionEntity(event.params.nftCollection.toHexString());
 
-		entity.mintMode = BigInt.fromI32(0);
+		entity.mintMode = 0;
 	} else {
 		log.error("ALREADY EXISTS!!!!!!", [event.address.toHexString()]);
 		return;

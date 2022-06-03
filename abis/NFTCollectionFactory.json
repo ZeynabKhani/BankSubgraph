@@ -7,16 +7,6 @@
 				"type": "address"
 			},
 			{
-				"internalType": "address",
-				"name": "_nftBankImpl",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_superAdmin",
-				"type": "address"
-			},
-			{
 				"internalType": "uint256",
 				"name": "_launchpadFeePercentage",
 				"type": "uint256"
@@ -31,14 +21,23 @@
 		"type": "constructor"
 	},
 	{
-		"inputs": [],
-		"name": "DoesNotSupportINFTBank",
-		"type": "error"
-	},
-	{
-		"inputs": [],
-		"name": "NotADifferentImpl",
-		"type": "error"
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newLaunchpadFeeWallet",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "oldLaunchpadFeeWallet",
+				"type": "address"
+			}
+		],
+		"name": "LaunchpadFeeWalletChanged",
+		"type": "event"
 	},
 	{
 		"anonymous": false,
@@ -46,7 +45,13 @@
 			{
 				"indexed": true,
 				"internalType": "address",
-				"name": "nftBankProxyAddress",
+				"name": "nftCollectionFactoryAddress",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "nftCollection",
 				"type": "address"
 			},
 			{
@@ -57,24 +62,74 @@
 			},
 			{
 				"indexed": false,
-				"internalType": "uint256",
-				"name": "launchpadFee",
-				"type": "uint256"
+				"internalType": "string",
+				"name": "symbol",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes32",
+				"name": "baseURIHash",
+				"type": "bytes32"
 			},
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "mintCap",
+				"name": "nftType",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
-				"internalType": "uint256",
-				"name": "nftImportExpirationTime",
-				"type": "uint256"
+				"internalType": "uint256[5]",
+				"name": "variables",
+				"type": "uint256[5]"
+			},
+			{
+				"indexed": false,
+				"internalType": "address[3]",
+				"name": "addresses",
+				"type": "address[3]"
 			}
 		],
-		"name": "NFTBankCreated",
+		"name": "NFTCollectionCreated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "newAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "oldAddress",
+				"type": "address"
+			}
+		],
+		"name": "NewERC1155NFTCollectionFactoryAddressWasSet",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "newAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "oldAddress",
+				"type": "address"
+			}
+		],
+		"name": "NewERC721NFTCollectionFactoryAddressWasSet",
 		"type": "event"
 	},
 	{
@@ -113,44 +168,6 @@
 			}
 		],
 		"name": "NewMintCapWasSet",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "newImpl",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "oldImpl",
-				"type": "address"
-			}
-		],
-		"name": "NewNFTBankImplWasSet",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "newSuperAdmin",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "oldSuperAdmin",
-				"type": "address"
-			}
-		],
-		"name": "NewSuperAdminWasSet",
 		"type": "event"
 	},
 	{
@@ -243,7 +260,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "BANK_CREATOR_ROLE",
+		"name": "DEFAULT_ADMIN_ROLE",
 		"outputs": [
 			{
 				"internalType": "bytes32",
@@ -256,12 +273,38 @@
 	},
 	{
 		"inputs": [],
-		"name": "DEFAULT_ADMIN_ROLE",
+		"name": "ERC1155Token",
 		"outputs": [
 			{
-				"internalType": "bytes32",
+				"internalType": "uint256",
 				"name": "",
-				"type": "bytes32"
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "ERC721Token",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "admin",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -275,12 +318,37 @@
 				"type": "string"
 			},
 			{
+				"internalType": "string",
+				"name": "symbol",
+				"type": "string"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "baseURIHash",
+				"type": "bytes32"
+			},
+			{
 				"internalType": "uint256",
-				"name": "nftImportExpirationTime",
+				"name": "nftType",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "maxMintCount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "mintExpirationTime",
 				"type": "uint256"
 			}
 		],
-		"name": "createBankProxy",
+		"name": "createNFTCollectionProxy",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -289,6 +357,32 @@
 			}
 		],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "erc1155NFTCollectionFactory",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "erc721NFTCollectionFactory",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -392,19 +486,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "nftBankImpl",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "bytes32",
@@ -456,6 +537,19 @@
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "newLaunchpadFeeWallet",
+				"type": "address"
+			}
+		],
+		"name": "setLaunchpadFeeWallet",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "_mintCap",
 				"type": "uint256"
@@ -470,11 +564,11 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "ImpAdr",
+				"name": "newAddress",
 				"type": "address"
 			}
 		],
-		"name": "setNewBankImplAddress",
+		"name": "setNewERC1155NFTCollectionFactoryAddress",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -483,26 +577,13 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_superAdmin",
+				"name": "newAddress",
 				"type": "address"
 			}
 		],
-		"name": "setNewSuperAdmin",
+		"name": "setNewERC721NFTCollectionFactoryAddress",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "superAdmin",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
