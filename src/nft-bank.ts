@@ -10,6 +10,6 @@ export function handlePrivateModeIsOn(event: PrivateModeIsOn): void {
 		return;
 	}
 
-	entity.mintMode = BigInt.fromI32(1);
+	entity.please = event.params.privateMode;
 	entity.save();
 }

@@ -1,16 +1,5 @@
-type ExampleEntity @entity {
-	id: ID!
-	count: BigInt!
-	nftBankProxyAddress: Bytes! # address
-	name: String! # string
-}
-
 type NFTBankEntity @entity {
 	id: ID!
-	mintMode: BigInt!
-}
-
-type NFTCollectionEntity @entity {
-	id: ID!
-	mintMode: Int!
+	# mintMode: Int!
+	please: Boolean!
 }

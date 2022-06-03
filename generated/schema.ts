@@ -11,65 +11,6 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class ExampleEntity extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save ExampleEntity entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type ExampleEntity must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
-      );
-      store.set("ExampleEntity", id.toString(), this);
-    }
-  }
-
-  static load(id: string): ExampleEntity | null {
-    return changetype<ExampleEntity | null>(store.get("ExampleEntity", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get count(): BigInt {
-    let value = this.get("count");
-    return value!.toBigInt();
-  }
-
-  set count(value: BigInt) {
-    this.set("count", Value.fromBigInt(value));
-  }
-
-  get nftBankProxyAddress(): Bytes {
-    let value = this.get("nftBankProxyAddress");
-    return value!.toBytes();
-  }
-
-  set nftBankProxyAddress(value: Bytes) {
-    this.set("nftBankProxyAddress", Value.fromBytes(value));
-  }
-
-  get name(): string {
-    let value = this.get("name");
-    return value!.toString();
-  }
-
-  set name(value: string) {
-    this.set("name", Value.fromString(value));
-  }
-}
-
 export class NFTBankEntity extends Entity {
   constructor(id: string) {
     super();
@@ -101,55 +42,12 @@ export class NFTBankEntity extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get mintMode(): BigInt {
-    let value = this.get("mintMode");
-    return value!.toBigInt();
+  get please(): boolean {
+    let value = this.get("please");
+    return value!.toBoolean();
   }
 
-  set mintMode(value: BigInt) {
-    this.set("mintMode", Value.fromBigInt(value));
-  }
-}
-
-export class NFTCollectionEntity extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save NFTCollectionEntity entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type NFTCollectionEntity must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
-      );
-      store.set("NFTCollectionEntity", id.toString(), this);
-    }
-  }
-
-  static load(id: string): NFTCollectionEntity | null {
-    return changetype<NFTCollectionEntity | null>(
-      store.get("NFTCollectionEntity", id)
-    );
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get mintMode(): i32 {
-    let value = this.get("mintMode");
-    return value!.toI32();
-  }
-
-  set mintMode(value: i32) {
-    this.set("mintMode", Value.fromI32(value));
+  set please(value: boolean) {
+    this.set("please", Value.fromBoolean(value));
   }
 }

@@ -1,81 +1,43 @@
 specVersion: 0.0.4
 schema:
-    file: ./schema.graphql
+  file: ./schema.graphql
 dataSources:
-    # - kind: ethereum
-    #   name: NFTBankFactory
-    #   network: fuji
-    #   source:
-    #       address: "0xD43eBabD481CC2EaE57150F6b8dD767A4aeBc4eF"
-    #       abi: NFTBankFactory
-    #       startBlock: 10354573
-    #   mapping:
-    #       kind: ethereum/events
-    #       apiVersion: 0.0.5
-    #       language: wasm/assemblyscript
-    #       entities:
-    #           - NFTBankEntity
-    #       abis:
-    #           - name: NFTBankFactory
-    #             file: ./abis/NFTBankFactory.json
-    #       eventHandlers:
-    #           - event: NFTBankCreated(indexed address,string,uint256,uint256,uint256)
-    #             handler: handleNFTBankCreated
-    #       file: ./src/nft-bank-factory.ts
-    - kind: ethereum
-      name: NFTCollectionFactory
-      network: fuji
-      source:
-          address: "0xb2E83358c2230cf44601BBCACFc97aA3abC7bC86"
-          abi: NFTCollectionFactory
-          startBlock: 10355461
-      mapping:
-          kind: ethereum/events
-          apiVersion: 0.0.5
-          language: wasm/assemblyscript
-          entities:
-              - NFTCollectionEntity
-          abis:
-              - name: NFTCollectionFactory
-                file: ./abis/NFTCollectionFactory.json
-          eventHandlers:
-              - event: NFTCollectionCreated(indexed address,indexed address,string,string,bytes32,uint256,uint256[5],address[3])
-                handler: handleNFTCollectionCreated
-          file: ./src/nft-collection-factory.ts
+  - kind: ethereum/contract
+    name: NFTBankFactory
+    network: fuji
+    source:
+      address: "0x10B30752C503B0c16F1271Aac1a6E7bfa1b0ad1a"
+      abi: NFTBankFactory
+      startBlock: 10359948
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - NFTBankEntity
+      abis:
+        - name: NFTBankFactory
+          file: ./abis/NFTBankFactory.json
+      eventHandlers:
+        - event: NFTBankCreated(address)
+          handler: handleNFTBankCreated
+      file: ./src/nft-bank-factory.ts
 templates:
-    # - kind: ethereum
-    #   name: NFTBank
-    #   network: fuji
-    #   source:
-    #       abi: NFTBank
-    #   mapping:
-    #       kind: ethereum/events
-    #       apiVersion: 0.0.5
-    #       language: wasm/assemblyscript
-    #       entities:
-    #           - NFTBankEntity
-    #       abis:
-    #           - name: NFTBank
-    #             file: ./abis/NFTBank.json
-    #       eventHandlers:
-    #           - event: PrivateModeIsOn()
-    #             handler: handlePrivateModeIsOn
-    #       file: ./src/nft-bank.ts
-    - kind: ethereum
-      name: ERC721NFTCollection
-      network: fuji
-      source:
-          abi: ERC721NFTCollection
-      mapping:
-          kind: ethereum/events
-          apiVersion: 0.0.5
-          language: wasm/assemblyscript
-          entities:
-              - NFTCollectionEntity
-          abis:
-              - name: ERC721NFTCollection
-                file: ./abis/ERC721NFTCollection.json
-          eventHandlers:
-              - event: PrivateModeIsOn()
-                handler: handlePrivateModeIsOn
-          file: ./src/erc721-nft-collection.ts
+  - name: NFTBank
+    kind: ethereum/contract
+    network: fuji
+    source:
+      abi: NFTBank
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - NFTBankEntity
+      abis:
+        - name: NFTBank
+          file: ./abis/NFTBank.json
+      eventHandlers:
+        - event: PrivateModeIsOn(bool)
+          handler: handlePrivateModeIsOn
+      file: ./src/nft-bank.ts

@@ -6,16 +6,12 @@ import {
   DataSourceContext
 } from "@graphprotocol/graph-ts";
 
-export class ERC721NFTCollection extends DataSourceTemplate {
+export class NFTBank extends DataSourceTemplate {
   static create(address: Address): void {
-    DataSourceTemplate.create("ERC721NFTCollection", [address.toHex()]);
+    DataSourceTemplate.create("NFTBank", [address.toHex()]);
   }
 
   static createWithContext(address: Address, context: DataSourceContext): void {
-    DataSourceTemplate.createWithContext(
-      "ERC721NFTCollection",
-      [address.toHex()],
-      context
-    );
+    DataSourceTemplate.createWithContext("NFTBank", [address.toHex()], context);
   }
 }

@@ -3,12 +3,13 @@ import { NFTBankCreated } from "../generated/NFTBankFactory/NFTBankFactory";
 import { NFTBankEntity } from "../generated/schema";
 
 export function handleNFTBankCreated(event: NFTBankCreated): void {
-	let entity = NFTBankEntity.load(event.params.nftBankProxyAddress.toHexString());
+	let entity = NFTBankEntity.load(event.params.nftBankProxy.toHexString());
 
 	if (!entity) {
-		entity = new NFTBankEntity(event.params.nftBankProxyAddress.toHexString());
+		entity = new NFTBankEntity(event.params.nftBankProxy.toHexString());
 
-		entity.mintMode = BigInt.fromI32(0);
+		// entity.mintMode = BigInt.fromI32(0);
+		entity.please = false;
 	} else {
 		log.error("ALREADY EXISTS!!!!!!", [event.address.toHexString()]);
 		return;
